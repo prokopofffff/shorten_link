@@ -1,0 +1,14 @@
+{
+  "name": "url-shortener-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --stream -r dev",
+    "build": "pnpm --filter \"./packages/**\" build",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@8.6.0"
+}

@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id          String   @id @default(cuid())
+  shortId     String   @unique
+  originalUrl String
+  alias       String?  @unique @db.VarChar(20)
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime?
+  clickCount  Int      @default(0)
+  clicks      Click[]
+}
+
+model Click {
+  id        String   @id @default(cuid())
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  linkId    String
+  ipAddress String
+  createdAt DateTime @default(now())
+}
